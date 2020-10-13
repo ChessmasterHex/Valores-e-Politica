@@ -53,9 +53,9 @@ const i18n = {
             return i18n[name][userLang]
         }
         if (arguments) {
-            return i18n[name]["br"](...arguments)
+            return i18n[name]["en"](...arguments)
         }
-        return i18n[name]["br"]
+        return i18n[name]["en"]
     },
     "lang": userLang,
     // quiz.html
@@ -64,7 +64,7 @@ const i18n = {
         "de": "Laden…",
         "ko": "로딩중...",
         "ru": "Загрузка...",
-        "cn": "载入中..."
+        "cn": "载入中...",
         "en": "Loading..."
 
     },
@@ -109,7 +109,7 @@ const i18n = {
         "cn": "强烈反对"
     },
     "quiz-back": {
-        "br": "voltar"
+        "br": "voltar",
         "en": "back",
         "de": "Zurück",
         "ko": "뒤로",
@@ -126,7 +126,7 @@ const i18n = {
     },
     // instructions.html
     "inst-h2": {
-        "br": "Instruções"
+        "br": "Instruções",
         "en": "Instructions",
         "de": "Instruktionen",
         "ko": "소개",
