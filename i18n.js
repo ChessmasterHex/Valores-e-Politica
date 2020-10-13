@@ -1,23 +1,28 @@
-function getCookie (name) {
+function getCookie(name) {
     let value = '; ' + document.cookie
     let parts = value.split('; ' + name + '=')
     if (parts.length === 2) return parts.pop().split(';').shift()
 }
-function setCookie (cname, cvalue, exhours) {
+
+function setCookie(cname, cvalue, exhours) {
     let d = new Date()
     d.setTime(Date.now() + (exhours * 60 * 60 * 1000))
     let expires = 'expires=' + d.toUTCString()
     document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/'
 }
+
 function setBodyClassUserLang(userLang) {
-  document.getElementsByTagName('body')[0].classList.add(`__i18n-${userLang}`)
+    document.getElementsByTagName('body')[0].classList.add(`__i18n-${userLang}`)
 }
 
 const langElements = document.querySelectorAll('[data-i18n]')
 const userLang = getCookie("lang") || navigator.language || navigator.userLanguage
 setBodyClassUserLang(userLang)
 
-const languages = [
+const languages = [{
+        "name": "brasileiro",
+        "code": "br"
+    },
     {
         "name": "english",
         "code": "en"
@@ -40,27 +45,31 @@ const languages = [
     }
 ]
 const i18n = {
-    getString(name, arguments=null) {
+    getString(name, arguments = null) {
         if (userLang in i18n[name]) {
-             if (arguments) {
-                 return i18n[name][userLang](...arguments)
-             }
-             return i18n[name][userLang]
+            if (arguments) {
+                return i18n[name][userLang](...arguments)
+            }
+            return i18n[name][userLang]
         }
         if (arguments) {
-            return i18n[name]["en"](...arguments)
+            return i18n[name]["br"](...arguments)
         }
-        return i18n[name]["en"]  
+        return i18n[name]["br"]
     },
     "lang": userLang,
     // quiz.html
     "quiz-loading": {
+        "br": "Carregando",
         "de": "Laden…",
         "ko": "로딩중...",
         "ru": "Загрузка...",
         "cn": "载入中..."
+        "en": "Loading..."
+
     },
     "quiz-strongly-agree": {
+        "br": "Concordo Plenamente",
         "en": "Strongly Agree",
         "de": "Stimme voll zu",
         "ko": "매우 동의",
@@ -68,6 +77,7 @@ const i18n = {
         "cn": "强烈同意"
     },
     "quiz-agree": {
+        "pt": "Concordo na maior parte",
         "en": "Agree",
         "de": "Stimme zu",
         "ko": "동의",
@@ -76,12 +86,14 @@ const i18n = {
     },
     "quiz-neutral": {
         "en": "Neutral/Unsure",
+        "br": "Não me interesso/não sei sobre",
         "de": "Neutral/Unsicher",
         "ko": "중립/잘 모름",
         "ru": "Не знаю/Не уверен",
         "cn": "中立/不确定"
     },
     "quiz-disagree": {
+        "br": "Discordo, não é bem assim",
         "en": "Disagree",
         "de": "Stimme nicht zu",
         "ko": "동의하지 않음",
@@ -89,6 +101,7 @@ const i18n = {
         "cn": "反对"
     },
     "quiz-strongly-disagree": {
+        "br": "Discordo Completamente",
         "en": "Strongly Disagree",
         "de": "Stimme überhaupt nicht zu",
         "ko": "결코 동의하지 않음",
@@ -96,21 +109,24 @@ const i18n = {
         "cn": "强烈反对"
     },
     "quiz-back": {
-        "de": "back",
+        "br": "voltar"
+        "en": "back",
         "de": "Zurück",
         "ko": "뒤로",
         "ru": "Назад",
         "cn": "返回"
     },
     "quiz-question-of": {
-        en(qn, questions) {return `Question ${qn + 1} of ${questions.length}`},
-        de(qn, questions) {return `Frage ${qn +1} von ${questions.length}`},
-        ko(qn, questions) {return `${questions.length}개 질문 중 ${qn +1} 번째`},
-        ru(qn, questions) {return `Вопрос ${qn + 1} из ${questions.length}`},
-        cn(qn, questions) {return `第 ${qn + 1} 题，共 ${questions.length} 题`}
+        br(qn, questions) { return `Questão ${qn + 1} de ${questions.length}` },
+        en(qn, questions) { return `Question ${qn + 1} of ${questions.length}` },
+        de(qn, questions) { return `Frage ${qn +1} von ${questions.length}` },
+        ko(qn, questions) { return `${questions.length}개 질문 중 ${qn +1} 번째` },
+        ru(qn, questions) { return `Вопрос ${qn + 1} из ${questions.length}` },
+        cn(qn, questions) { return `第 ${qn + 1} 题，共 ${questions.length} 题` }
     },
     // instructions.html
     "inst-h2": {
+        "br": "Instruções"
         "en": "Instructions",
         "de": "Instruktionen",
         "ko": "소개",
@@ -189,53 +205,53 @@ const i18n = {
         "cn": "请记住，你没必要在任何一类中获得100%的分数。测试的重点是挑战你的观点。如果你有任何建议或是建设性的批评，请填写<a href='https://forms.gle/6WZYMb5GXkkDLhxr5'>这份表格</a>或是在<a href='https://github.com/LeftValues/leftvalues.github.io'>该项目的GitHub Page</a>上开个issue。"
     },
     "result-a-label": {
-        "en": ["Extremely Revolutionary","Very Revolutionary","Revolutionary","Neutral","Reformist","Very Reformist","Extremely Reformist"],
+        "en": ["Extremely Revolutionary", "Very Revolutionary", "Revolutionary", "Neutral", "Reformist", "Very Reformist", "Extremely Reformist"],
         "de": ["Extrem Revolutionär", "Sehr Revolutionär", "Revolutionär", "Neutral", "Reformistisch", "Sehr Reformistisch", "Extrem Reformistisch"],
-        "ko": ["극단적 혁명주의","강경한 혁명주의","혁명주의","중립","개혁주의","강경한 개혁주의","극단적 개혁주의"],
-        "ru": ["Крайне Революционный","Очень Революционный","Революционный","Нейтральный","Реформистский","Очень Реформистский","Крайне Реформистский"],
-        "cn": ["极端革命派","非常革命派","革命派","中立","改良派","非常改良派","极端改良派"]
+        "ko": ["극단적 혁명주의", "강경한 혁명주의", "혁명주의", "중립", "개혁주의", "강경한 개혁주의", "극단적 개혁주의"],
+        "ru": ["Крайне Революционный", "Очень Революционный", "Революционный", "Нейтральный", "Реформистский", "Очень Реформистский", "Крайне Реформистский"],
+        "cn": ["极端革命派", "非常革命派", "革命派", "中立", "改良派", "非常改良派", "极端改良派"]
     },
     "result-b-label": {
-        "en": ["Extremely Scientific","Very Scientific","Scientific","Neutral","Utopian","Very Utopian","Extremely Utopian"],
+        "en": ["Extremely Scientific", "Very Scientific", "Scientific", "Neutral", "Utopian", "Very Utopian", "Extremely Utopian"],
         "de": ["Extrem Wissenschaftlich", "Sehr Wissenschaftlich", "Wissenschaftlich", "Neutral", "Utopisch", "Sehr Utopisch", "Extrem Utopisch"],
-        "ko": ["극단적 과학주의","강경한 과학주의","과학주의","중립","공상주의","강경한 공상주의","극단적 공상주의"],
-        "ru": ["Крайне Научный","Очень Научный","Научный","Нейтральный","Утопичный","Очень Утопичный","Крайне Утопичный"],
-        "cn": ["极端科学社会主义","非常科学社会主义","科学社会主义","中立","空想社会主义","非常空想社会主义","极端空想社会主义"]
+        "ko": ["극단적 과학주의", "강경한 과학주의", "과학주의", "중립", "공상주의", "강경한 공상주의", "극단적 공상주의"],
+        "ru": ["Крайне Научный", "Очень Научный", "Научный", "Нейтральный", "Утопичный", "Очень Утопичный", "Крайне Утопичный"],
+        "cn": ["极端科学社会主义", "非常科学社会主义", "科学社会主义", "中立", "空想社会主义", "非常空想社会主义", "极端空想社会主义"]
     },
     "result-c-label": {
-        "en": ["Extremely Centralist","Very Centralist","Centralist","Neutral","Decentralist","Very Decentralist","Extremely Decentralist"],
+        "en": ["Extremely Centralist", "Very Centralist", "Centralist", "Neutral", "Decentralist", "Very Decentralist", "Extremely Decentralist"],
         "de": ["Extrem Zentralisiert", "Sehr Zentralisiert", "Zentralisiert", "Neutral", "Dezentralisiert", "Sehr Dezentralisiert", "Extrem Dezentralisiert"],
         "ko": ["극단적 중앙집권주의", "강경한 중앙집권주의", "중앙집권주의", "중립", "분권주의", "강경한 분권주의", "극단적 분권주의"],
-        "ru": ["Крайне Централизованный","Очень Централизованный","Централизованный","Нейтральный","Децентрализованный","Очень Децентрализованный","Крайне Децентрализованный"],
-        "cn": ["极端集权","非常集权","集权","中立","分权","非常分权","极端分权"]
+        "ru": ["Крайне Централизованный", "Очень Централизованный", "Централизованный", "Нейтральный", "Децентрализованный", "Очень Децентрализованный", "Крайне Децентрализованный"],
+        "cn": ["极端集权", "非常集权", "集权", "中立", "分权", "非常分权", "极端分权"]
     },
     "result-d-label": {
-        "en": ["Extremely Internationalist","Very Internationalist","Internationalist","Neutral","Nationalist","Very Nationalist","Extremely Nationalist"],
+        "en": ["Extremely Internationalist", "Very Internationalist", "Internationalist", "Neutral", "Nationalist", "Very Nationalist", "Extremely Nationalist"],
         "de": ["Extrem Internationalistisch", "Sehr Internationalistisch", "Internationalistisch", "Neutral", "Nationalistisch", "Sehr Nationalistisch", "Extrem Nationalistisch"],
-        "ko": ["극단적 세계주의","강경한 세계주의","세계주의","중립","국가주의","강경한 국가주의","극단적 국가주의"],
-        "ru": ["Крайне Интернациональный","Очень Интернациональный","Интернациональный","Нейтральный","Национальный","Очень Национальный","Крайне Национальный"],
-        "cn": ["极端国际主义","非常国际主义","国际主义","中立","民族主义","非常民族主义","极端民族主义"]
+        "ko": ["극단적 세계주의", "강경한 세계주의", "세계주의", "중립", "국가주의", "강경한 국가주의", "극단적 국가주의"],
+        "ru": ["Крайне Интернациональный", "Очень Интернациональный", "Интернациональный", "Нейтральный", "Национальный", "Очень Национальный", "Крайне Национальный"],
+        "cn": ["极端国际主义", "非常国际主义", "国际主义", "中立", "民族主义", "非常民族主义", "极端民族主义"]
     },
     "result-e-label": {
-        "en": ["Extremely Partisan","Very Partisan","Partisan","Neutral","Unionist","Very Unionist","Extremely Unionist"],
+        "en": ["Extremely Partisan", "Very Partisan", "Partisan", "Neutral", "Unionist", "Very Unionist", "Extremely Unionist"],
         "de": ["Extrem Parteiisch", "Sehr Parteiisch", "Parteiisch", "Neutral", "Gewerkschaftlich", "Sehr Gewerkschaftlich", "Extrem Gewerkschaftlich"],
         "ko": ["극단적 정당주의", "강경한 정당주의", "정당주의", "중립", "조합주의", "강경한 조합주의", "극단적 조합주의"],
-        "ru": ["Крайне Партийный","Очень Партийный","Партийный","Нейтральный","Профсоюзный","Очень Профсоюзный","Крайне Профсоюзный"],
-        "cn": ["极端倾向党派","非常倾向党派","倾向党派","中立","倾向工会","非常倾向工会","极端倾向工会"]
+        "ru": ["Крайне Партийный", "Очень Партийный", "Партийный", "Нейтральный", "Профсоюзный", "Очень Профсоюзный", "Крайне Профсоюзный"],
+        "cn": ["极端倾向党派", "非常倾向党派", "倾向党派", "中立", "倾向工会", "非常倾向工会", "极端倾向工会"]
     },
     "result-f-label": {
-        "en": ["Extremely Productivist","Very Productivist","Productivist","Neutral","Ecological","Very Ecological","Extremely Ecological"],
+        "en": ["Extremely Productivist", "Very Productivist", "Productivist", "Neutral", "Ecological", "Very Ecological", "Extremely Ecological"],
         "de": ["Extrem Produktivist", "Sehr Produktivist", "Produktivist", "Neutral", "Ökologisch", "Sehr Ökologisch", "Extrem Ökologisch"],
         "ko": ["극단적 생산주의", "강경한 생산주의", "생산주의", "중립", "생태주의", "강경한 생태주의", "극단적 생태주의"],
-        "ru": ["Крайне Производственный","Очень Производственный","Производственный","Нейтральный","Экологический","Очень Экологический","Крайне Экологический"],
-        "cn": ["极端生产主义","非常生产主义","生产主义","中立","生态主义","非常生态主义","极端生态主义"]
+        "ru": ["Крайне Производственный", "Очень Производственный", "Производственный", "Нейтральный", "Экологический", "Очень Экологический", "Крайне Экологический"],
+        "cn": ["极端生产主义", "非常生产主义", "生产主义", "中立", "生态主义", "非常生态主义", "极端生态主义"]
     },
     "result-g-label": {
-        "en": ["Extremely Conservative","Very Conservative","Conservative","Neutral","Progressive","Very Progressive","Extremely Progressive"],
+        "en": ["Extremely Conservative", "Very Conservative", "Conservative", "Neutral", "Progressive", "Very Progressive", "Extremely Progressive"],
         "de": ["Extrem Konservativ", "Sehr Konservativ", "Konservativ", "Neutral", "Progressiv", "Sehr Progressiv", "Extrem Progressiv"],
         "ko": ["극단적 보수주의", "강경한 보수주의", "보수주의", "중립", "진보주의", "강경한 진보주의", "극단적 진보주의"],
         "ru": ["Крайне Консервативный", "Очень Консервативный", "Консервативный", "Нейтральный", "Прогрессивный", "Очень Прогрессивный", "Крайне Прогрессивный"],
-        "cn": ["极端保守主义","非常保守主义","保守主义","中立","进步主义","非常进步主义","极端进步主义"]
+        "cn": ["极端保守主义", "非常保守主义", "保守主义", "中立", "进步主义", "非常进步主义", "极端进步主义"]
     },
     "result-back": {
         "en": "Back",
@@ -252,7 +268,7 @@ const i18n = {
         "ru": "Начать тест",
         "cn": "点击这里开始！"
     },
-    "index-h2-whatis" : {
+    "index-h2-whatis": {
         "en": "What is LeftValues?",
         "de": "Was ist LeftValues?",
         "ko": "LeftValues가 무엇입니까?",
@@ -260,23 +276,23 @@ const i18n = {
         "cn": "LeftValues是什么？"
     },
     "index-p-answer": {
-        "en": "LeftValues is a leftist quiz inspired by and based upon the <a href='https://8values.github.io/'>8values</a> quiz that seeks to identify your position on the left-wing spectrum. " + 
-        "If you are not a leftist, this quiz is obviously not suited for you. You will be presented with a statement, and then you will answer with your opinion on the statement, from <b>Strongly Agree</b> to <b>Strongly Disagree</b>, with each answer slightly affecting your scores. The questions for each axes are presented in order, rather than scattered. At the end of the quiz, your answers will be compared to the maximum possible for each value, thus giving you a percentage. Answer honestly!<br/><br/>" +
-        "There are <b><u><span id='numOfQuestions'></span></u></b> questions in the test.",
+        "en": "LeftValues is a leftist quiz inspired by and based upon the <a href='https://8values.github.io/'>8values</a> quiz that seeks to identify your position on the left-wing spectrum. " +
+            "If you are not a leftist, this quiz is obviously not suited for you. You will be presented with a statement, and then you will answer with your opinion on the statement, from <b>Strongly Agree</b> to <b>Strongly Disagree</b>, with each answer slightly affecting your scores. The questions for each axes are presented in order, rather than scattered. At the end of the quiz, your answers will be compared to the maximum possible for each value, thus giving you a percentage. Answer honestly!<br/><br/>" +
+            "There are <b><u><span id='numOfQuestions'></span></u></b> questions in the test.",
         "de": "LeftValues ist ein linkes Quiz, das von dem Quiz <a href='https://8values.github.io/'>8values</a> inspiriert ist und auf diesem basiert und versucht, Ihre Position im linken Spektrum zu bestimmen." +
-        "Wenn Sie kein Linker sind, ist dieses Quiz offensichtlich nicht für Sie geeignet. Ihnen wird eine Erklärung vorgelegt, und Sie werden mit Ihrer Meinung zu den Fragen mit den Antworten <b>Stimme voll zu</b> bis <b>Stimme überhaupt nicht zu</b>, wobei sich jede Antwort geringfügig auf deine Punktzahl auswirkt. Die Fragen für die einzelnen Achsen werden nacheinander und nicht gestreut dargestellt. Am Ende des Quiz werden deine Antworten mit dem für jeden Wert maximal möglichen Wert verglichen. Damit geben Sie einen Prozentsatz. Antworte ehrlich! <br/> <br/>"+
-        "Der Test enthält <b><u><span id='numOfQuestions'></span></u></b> Fragen.",
+            "Wenn Sie kein Linker sind, ist dieses Quiz offensichtlich nicht für Sie geeignet. Ihnen wird eine Erklärung vorgelegt, und Sie werden mit Ihrer Meinung zu den Fragen mit den Antworten <b>Stimme voll zu</b> bis <b>Stimme überhaupt nicht zu</b>, wobei sich jede Antwort geringfügig auf deine Punktzahl auswirkt. Die Fragen für die einzelnen Achsen werden nacheinander und nicht gestreut dargestellt. Am Ende des Quiz werden deine Antworten mit dem für jeden Wert maximal möglichen Wert verglichen. Damit geben Sie einen Prozentsatz. Antworte ehrlich! <br/> <br/>" +
+            "Der Test enthält <b><u><span id='numOfQuestions'></span></u></b> Fragen.",
         "ko": `LeftValues는 <a href="https://8values.github.io/">8values</a>의 영감을 받아 좌익 스펙트럼 상에서 당신의 위치를 파악하기 위해 만들어진 좌익 설문입니다. 만약 당신이 좌파가 아니라면, 이 설문은 당신에게 적합하지 않을 것입니다.
         각 문항을 살펴보고 <b>매우 동의함</b>과 <b>결코 동의하지 않음</b> 사이의 답변을 선택하면, 각각의 답변이 당신의 점수에 조금씩 영향을 주게 될 것입니다.
         각 축에 해당하는 문항은 순서대로 표시됩니다.
         설문 마지막에 당신의 답변에 기초한 점수가 각각의 가치(values)가 가질 수 있는 최댓값에 대한 백분율로 표시됩니다.
         정직하게 답하십시오.<br/><br/> 이 설문에는 <b><u><span id="numOfQuestions"></span></u></b> 개의 문항이 있습니다.`,
-        "ru": "LeftValues — это ''левая'' политическая викторина, вдохновлённая и основанная на викторине <a href='https://8values.github.io/'>8values</a>, цель которой — определить вашу позицию на левом политическом спектре. " + 
-        "Если вы не придерживаетесь левых взглядов, эта викторина, очевидно, не подходит для вас. Вам будут даны утверждения, по каждому из которых вы должны ответить своим мнением, от <b>Полностью согласен</b> до <b>Полностью не согласен</b>, каждый ответ будет слегка влиять на ваши значения по каждой оси. Вопросы по каждой из осей представлены по порядку, а не разбросаны в случайном порядке. В конце викторины, ваши ответы будут сравниваться с максимально возможным для каждого значения, таким образом, давая вам процент. Отвечайте честно!<br/><br/>" +
-        "В данном тесте <b><u><span id='numOfQuestions'></span></u></b> вопросов.",
+        "ru": "LeftValues — это ''левая'' политическая викторина, вдохновлённая и основанная на викторине <a href='https://8values.github.io/'>8values</a>, цель которой — определить вашу позицию на левом политическом спектре. " +
+            "Если вы не придерживаетесь левых взглядов, эта викторина, очевидно, не подходит для вас. Вам будут даны утверждения, по каждому из которых вы должны ответить своим мнением, от <b>Полностью согласен</b> до <b>Полностью не согласен</b>, каждый ответ будет слегка влиять на ваши значения по каждой оси. Вопросы по каждой из осей представлены по порядку, а не разбросаны в случайном порядке. В конце викторины, ваши ответы будут сравниваться с максимально возможным для каждого значения, таким образом, давая вам процент. Отвечайте честно!<br/><br/>" +
+            "В данном тесте <b><u><span id='numOfQuestions'></span></u></b> вопросов.",
         "cn": "LeftValues是一个确定你在左翼光谱中的位置的左派测试，受<a href='https://8values.github.io/'>8values测试</a>启发并基于其制作。" +
-        "如果你不是左派，这个测试明显不适合你。你会看到一系列观点，然后你需要回答你对这些观点的看法。从<b>强烈同意</b>到<b>强烈反对</b>，每个回答都会影响你的分数。关于每个坐标轴的问题将依次给出，而不是打乱的。测试结束时，你的答案会和每个价值观的最大可能值做比较，从而得出一个百分比。请诚实作答！<br/><br/>" +
-        "测试中一共有<b><u><span id='numOfQuestions'></span></u></b>个问题。"
+            "如果你不是左派，这个测试明显不适合你。你会看到一系列观点，然后你需要回答你对这些观点的看法。从<b>强烈同意</b>到<b>强烈反对</b>，每个回答都会影响你的分数。关于每个坐标轴的问题将依次给出，而不是打乱的。测试结束时，你的答案会和每个价值观的最大可能值做比较，从而得出一个百分比。请诚实作答！<br/><br/>" +
+            "测试中一共有<b><u><span id='numOfQuestions'></span></u></b>个问题。"
     },
     "index-h2-whatvalues": {
         "en": "What are the values?",
@@ -294,81 +310,81 @@ const i18n = {
     },
     "index-rev-desc": {
         "en": "<b style='color:#890000;'>Revolution</b> <b>vs.</b> <b style='color:#FC5959;'>Reform</b><br/>" +
-        "Those with a higher revolution score tend to support a radical and rapid overthrow of the capitalist system through a mass uprising. Those with a higher reform score tend to favor inducing gradual changes within capitalist structures, such as liberal democracy, with the eventual goal of reaching socialism.",
+            "Those with a higher revolution score tend to support a radical and rapid overthrow of the capitalist system through a mass uprising. Those with a higher reform score tend to favor inducing gradual changes within capitalist structures, such as liberal democracy, with the eventual goal of reaching socialism.",
         "de": "<b style='color:#890000;'>Revolution</b> <b>vs.</b> <b style='color:#FC5959;'>Reform</b><br/>" +
-        "Diejenigen mit einem höheren Revolutionswert unterstützen tendenziell einen radikalen und raschen Sturz des kapitalistischen Systems durch einen Massenaufstand. Diejenigen mit einem höheren Reformwert tendieren dazu, allmähliche Veränderungen in kapitalistischen Strukturen wie der liberalen Demokratie herbeizuführen, mit dem eventuellen Ziel des Sozialismus.",
+            "Diejenigen mit einem höheren Revolutionswert unterstützen tendenziell einen radikalen und raschen Sturz des kapitalistischen Systems durch einen Massenaufstand. Diejenigen mit einem höheren Reformwert tendieren dazu, allmähliche Veränderungen in kapitalistischen Strukturen wie der liberalen Demokratie herbeizuführen, mit dem eventuellen Ziel des Sozialismus.",
         "ko": `<b style="color:#890000;">혁명</b> <b>vs.</b> <b style="color:#FC5959;">개혁</b><br/>
         혁명 점수가 높은 사람들은 대중 봉기를 통한 자본주의체제의 급진적이고 빠른 전복을 지지하는 경향이 있습니다. 개혁 점수가 높은 사람들은 자유주의 민주주의와 같은 자본주의 구조 내에서 점진적으로 사회주의에 도달하려는 목표를 가지고 변화를 유도하는 경향이 있습니다.`,
         "ru": "<b style='color:#890000;'>Революция</b> <b>vs.</b> <b style='color:#FC5959;'>Реформы</b><br/>" +
-        "Те, кто имеет более высокий балл Революции, склонны поддерживать радикальное и быстрое свержение капиталистической системы посредством массового восстания. Те, кто имеет более высокий балл Реформ, склонны выступать за постепенные изменения внутри капиталистических структур, таких как либеральная демократия, с конечной целью достижения социализма.",
+            "Те, кто имеет более высокий балл Революции, склонны поддерживать радикальное и быстрое свержение капиталистической системы посредством массового восстания. Те, кто имеет более высокий балл Реформ, склонны выступать за постепенные изменения внутри капиталистических структур, таких как либеральная демократия, с конечной целью достижения социализма.",
         "cn": "<b style='color:#890000;'>革命</b> <b>vs.</b> <b style='color:#FC5959;'>改良</b><br/>" +
-        "革命得分较高的人倾向于支持通过大规模起义来激进和迅速地推翻资本主义制度。改革得分较高的人倾向于支持在资本主义结构（如自由民主制）中引导渐进的变化，最终目标是实现社会主义。"
+            "革命得分较高的人倾向于支持通过大规模起义来激进和迅速地推翻资本主义制度。改革得分较高的人倾向于支持在资本主义结构（如自由民主制）中引导渐进的变化，最终目标是实现社会主义。"
     },
     "index-sci-desc": {
         "en": "<b style='color:#88232B;'>Scientific</b> <b>vs.</b> <b style='color:#7F0037;'>Utopian</b><br/>" +
-        "Those with a higher scientific score tend to support or sympathize with the Marxist analysis of society along the lines of dialectical materialism. Those with a higher utopian score tend to believe in a more idealistic analysis of society and reject materialist approaches.",
+            "Those with a higher scientific score tend to support or sympathize with the Marxist analysis of society along the lines of dialectical materialism. Those with a higher utopian score tend to believe in a more idealistic analysis of society and reject materialist approaches.",
         "de": "<b style='color:#88232B;'>Wissenschaftlich</b> <b>vs.</b> <b style='color:#7F0037;'>Utopisch</b><br/>" +
-        "Diejenigen mit einer höheren wissenschaftlichen Punktzahl neigen dazu, die marxistische Gesellschaftsanalyse im Sinne des dialektischen Materialismus zu unterstützen oder zu sympathisieren. Diejenigen mit einer höheren utopischen Bewertung neigen dazu, an eine idealistischere Analyse der Gesellschaft zu glauben und materialistische Ansätze abzulehnen.",
+            "Diejenigen mit einer höheren wissenschaftlichen Punktzahl neigen dazu, die marxistische Gesellschaftsanalyse im Sinne des dialektischen Materialismus zu unterstützen oder zu sympathisieren. Diejenigen mit einer höheren utopischen Bewertung neigen dazu, an eine idealistischere Analyse der Gesellschaft zu glauben und materialistische Ansätze abzulehnen.",
         "ko": `<b style="color:#88232B;">과학주의</b> <b>vs.</b> <b style="color:#7F0037;">공상주의</b><br/> 과학주의 점수가 높은 사람들은 변증법적 유물론의 기준으로 사회에 대한 마르크스주의 분석을 지지하거나 공감하는 경향이 있습니다. 공상주의 점수가 높은 사람들은 사회에 대한 이상적인 분석을 믿고 물질주의적 접근을 거부하는 경향이 있습니다.`,
         "ru": "<b style='color:#88232B;'>Научность</b> <b>vs.</b> <b style='color:#7F0037;'>Утопия</b><br/>" +
-        "Те, кто имеет более высокий балл Научности, склонны поддерживать или симпатизировать Марксистскому анализу общества по линии диалектического материализма. Те, кто имеет более высокий балл Утопии, склонны верить в более идеалистический анализ общества и отвергать материалистические подходы.",
+            "Те, кто имеет более высокий балл Научности, склонны поддерживать или симпатизировать Марксистскому анализу общества по линии диалектического материализма. Те, кто имеет более высокий балл Утопии, склонны верить в более идеалистический анализ общества и отвергать материалистические подходы.",
         "cn": "<b style='color:#88232B;'>科学社会主义</b> <b>vs.</b> <b style='color:#7F0037;'>空想社会主义</b><br/>" +
-        "科学社会主义得分较高的人倾向于支持或赞同对社会采用马克思主义的辩证唯物主义分析。空想社会主义得分较高的人倾向于相信对社会采用更理想主义的分析，而拒绝唯物主义的方法。"
+            "科学社会主义得分较高的人倾向于支持或赞同对社会采用马克思主义的辩证唯物主义分析。空想社会主义得分较高的人倾向于相信对社会采用更理想主义的分析，而拒绝唯物主义的方法。"
     },
     "index-cent-desc": {
-        "en": "<b style='color:#560000;'>Central</b> <b>vs.</b> <b style='color:#000000;'>Decentral</b><br/>" + 
-        "Those with a higher central score tend to support an economic structure based around centralized national planning. Those with a higher decentral score tend to support an economic structure based around decentralized planning, usually on a more localized scale.",
-        "de": "<b style='color:#560000;'>Zentralisiert</b> <b>vs.</b> <b style='color:#000000;'>Dezentralisiert</b><br/>" + 
-        "Diejenigen mit einer höheren zentralen Punktzahl neigen dazu, eine Wirtschaftsstruktur zu unterstützen, die auf einer zentralisierten nationalen Planung beruht. Diejenigen mit einer höheren dezentralen Punktzahl neigen dazu, eine Wirtschaftsstruktur zu unterstützen, die auf einer dezentralen Planung beruht, normalerweise in einem lokaleren Maßstab.",
+        "en": "<b style='color:#560000;'>Central</b> <b>vs.</b> <b style='color:#000000;'>Decentral</b><br/>" +
+            "Those with a higher central score tend to support an economic structure based around centralized national planning. Those with a higher decentral score tend to support an economic structure based around decentralized planning, usually on a more localized scale.",
+        "de": "<b style='color:#560000;'>Zentralisiert</b> <b>vs.</b> <b style='color:#000000;'>Dezentralisiert</b><br/>" +
+            "Diejenigen mit einer höheren zentralen Punktzahl neigen dazu, eine Wirtschaftsstruktur zu unterstützen, die auf einer zentralisierten nationalen Planung beruht. Diejenigen mit einer höheren dezentralen Punktzahl neigen dazu, eine Wirtschaftsstruktur zu unterstützen, die auf einer dezentralen Planung beruht, normalerweise in einem lokaleren Maßstab.",
         "ko": `<b style="color:#560000;">중앙집권주의</b> <b>vs.</b> <b style="color:#000000;">분권주의</b><br/> 중앙집권주의 점수가 높은 사람들은 중앙집중식 국가계획을 기반한 경제 구조를 지지하는 경향이 있습니다. 분권주의 점수가 높은 사람들은 분산계획을 중심으로 한 경제 구조를 지지하는 경향이 있습니다.`,
-        "ru": "<b style='color:#560000;'>Централизация</b> <b>vs.</b> <b style='color:#000000;'>Децентрализация</b><br/>" + 
-        "Те, кто имеет более высокий балл Централизации, как правило, поддерживают экономическую структуру, основанную на централизованном национальном планировании. Те, кто имеет более высокий балл Децентрализации, как правило, поддерживают экономическую структуру, основанную на децентрализованном планировании, как правило, на более локальном уровне.",
-        "cn": "<b style='color:#560000;'>集权</b> <b>vs.</b> <b style='color:#000000;'>分权</b><br/>" + 
-        "集权得分较高的人倾向于支持基于国家中央计划的经济结构。分权得分较高的人倾向于支持基于分散计划的经济结构，通常更侧重于地方。"
+        "ru": "<b style='color:#560000;'>Централизация</b> <b>vs.</b> <b style='color:#000000;'>Децентрализация</b><br/>" +
+            "Те, кто имеет более высокий балл Централизации, как правило, поддерживают экономическую структуру, основанную на централизованном национальном планировании. Те, кто имеет более высокий балл Децентрализации, как правило, поддерживают экономическую структуру, основанную на децентрализованном планировании, как правило, на более локальном уровне.",
+        "cn": "<b style='color:#560000;'>集权</b> <b>vs.</b> <b style='color:#000000;'>分权</b><br/>" +
+            "集权得分较高的人倾向于支持基于国家中央计划的经济结构。分权得分较高的人倾向于支持基于分散计划的经济结构，通常更侧重于地方。"
     },
     "index-int-desc": {
         "en": "<b style='color:#782F52;'>International</b> <b>vs.</b> <b style='color:#7F3300;'>National</b><br/>" +
-        "Those with a higher international score tend to support forming an international socialist movement, often with the eventual goal of abolishing nations. Those with a higher national score tend to prioritize building socialism within existing borders and reject the goal of a world socialist republic.",
+            "Those with a higher international score tend to support forming an international socialist movement, often with the eventual goal of abolishing nations. Those with a higher national score tend to prioritize building socialism within existing borders and reject the goal of a world socialist republic.",
         "de": "<b style='color:#782F52;'>International</b> <b>vs.</b> <b style='color:#7F3300;'>National</b><br/>" +
-        "Diejenigen mit einer höheren internationalen Punktzahl neigen dazu, die Bildung einer internationalen sozialistischen Bewegung zu unterstützen, oft mit dem Ziel, Nationen abzuschaffen. Diejenigen mit einer höheren nationalen Punktzahl neigen dazu, den Aufbau des Sozialismus innerhalb der bestehenden Grenzen zu priorisieren und das Ziel einer sozialistischen Weltrepublik abzulehnen.",
+            "Diejenigen mit einer höheren internationalen Punktzahl neigen dazu, die Bildung einer internationalen sozialistischen Bewegung zu unterstützen, oft mit dem Ziel, Nationen abzuschaffen. Diejenigen mit einer höheren nationalen Punktzahl neigen dazu, den Aufbau des Sozialismus innerhalb der bestehenden Grenzen zu priorisieren und das Ziel einer sozialistischen Weltrepublik abzulehnen.",
         "ko": `<b style="color:#782F52;">세계</b> <b>vs.</b> <b style="color:#7F3300;">국가</b><br/> 세계주의 점수가 높은 사람들은 종종 국가를 폐지하겠다는 궁극적 목표를 가지고 국제 사회주의 운동을 지원하는 경향이 있습니다. 높은 국가주의 점수를 받은 사람들은 기존 국경 내에서 사회주의 구축을 우선하고 국제 사회주의 공화국의 목표는 거부하는 경향이 있습니다.`,
         "ru": "<b style='color:#782F52;'>Интернационализм</b> <b>vs.</b> <b style='color:#7F3300;'>Национализм</b><br/>" +
-        "Те, кто имеет более высокий балл Интернационализма, как правило, поддерживают формирование международного социалистического движения, зачастую с конечной целью ликвидации государств. Те, кто имеет более высокий балл Национализма, склонны отдавать приоритет построению социализма в рамках существующих границ и отвергать цель мировой социалистической республики.",
+            "Те, кто имеет более высокий балл Интернационализма, как правило, поддерживают формирование международного социалистического движения, зачастую с конечной целью ликвидации государств. Те, кто имеет более высокий балл Национализма, склонны отдавать приоритет построению социализма в рамках существующих границ и отвергать цель мировой социалистической республики.",
         "cn": "<b style='color:#782F52;'>国际主义</b> <b>vs.</b> <b style='color:#7F3300;'>民族主义</b><br/>" +
-        "国际主义得分较高的人倾向于支持建立国际社会主义运动，其最终目标往往是废除国家。民族主义得分较高的人倾向于优先在现有国界内建设社会主义，而拒绝世界社会主义共和国的目标。"
+            "国际主义得分较高的人倾向于支持建立国际社会主义运动，其最终目标往往是废除国家。民族主义得分较高的人倾向于优先在现有国界内建设社会主义，而拒绝世界社会主义共和国的目标。"
     },
     "index-party-desc": {
         "en": "<b style='color:#963B33;'>Party</b> <b>vs.</b> <b style='color:#7F333B;'>Union</b><br/>" +
-        "Those with a higher party score tend to favor using political parties as the basis of a socialist movement. Those with a higher union score tend to favor using trade unions and other forms of mass organization as a basis of a socialist movement. Being pro-party does not necessarily mean you oppose unions and vice versa, it is more about preference.",
+            "Those with a higher party score tend to favor using political parties as the basis of a socialist movement. Those with a higher union score tend to favor using trade unions and other forms of mass organization as a basis of a socialist movement. Being pro-party does not necessarily mean you oppose unions and vice versa, it is more about preference.",
         "de": "<b style='color:#963B33;'>Partei</b> <b>vs.</b> <b style='color:#7F333B;'>Gesellschaft</b><br/>" +
-        "Diejenigen mit einer höheren Parteibewertung bevorzugen es, politische Parteien als Grundlage einer sozialistischen Bewegung zu verwenden. Diejenigen mit einer höheren Gewerkschaftsbewertung bevorzugen es, Gewerkschaften und andere Formen der Massenorganisation als Grundlage einer sozialistischen Bewegung zu verwenden. Partei bedeutet nicht unbedingt, dass Sie gegen Gewerkschaften sind und umgekehrt, es geht mehr um Präferenzen.",
+            "Diejenigen mit einer höheren Parteibewertung bevorzugen es, politische Parteien als Grundlage einer sozialistischen Bewegung zu verwenden. Diejenigen mit einer höheren Gewerkschaftsbewertung bevorzugen es, Gewerkschaften und andere Formen der Massenorganisation als Grundlage einer sozialistischen Bewegung zu verwenden. Partei bedeutet nicht unbedingt, dass Sie gegen Gewerkschaften sind und umgekehrt, es geht mehr um Präferenzen.",
         "ko": `<b style="color:#963B33;">정당</b> <b>vs.</b> <b style="color:#7F333B;">조합</b><br/> 정당주의 점수가 높은 사람들은 정당을 사회주의 운동의 기초로 삼는 것을 선호하는 경향이 있습니다. 조합주의 점수가 높은 사람들은 조합과 다른 형태의 대중조직을 사회주의 운동의 기초로 삼는 것을 좋아합니다. 정당이라고 해서 반드시 조합에 반대한다는 의미는 아니며 그 반대 또한 마찬가지입니다.`,
         "ru": "<b style='color:#963B33;'>Партия</b> <b>vs.</b> <b style='color:#7F333B;'>Профсоюзы</b><br/>" +
-        "Те, кто имеет более высокий балл Партии, склонны отдавать предпочтение использованию политических партий в качестве основы социалистического движения. Те, кто имеет более высокий балл Профсоюзов, склонны отдавать предпочтение использованию профсоюзов и других форм массовой организации как основы социалистического движения. Быть пропартийным не обязательно означает выступать против профсоюзов, и наоборот, речь идёт скорее о предпочтениях.",
+            "Те, кто имеет более высокий балл Партии, склонны отдавать предпочтение использованию политических партий в качестве основы социалистического движения. Те, кто имеет более высокий балл Профсоюзов, склонны отдавать предпочтение использованию профсоюзов и других форм массовой организации как основы социалистического движения. Быть пропартийным не обязательно означает выступать против профсоюзов, и наоборот, речь идёт скорее о предпочтениях.",
         "cn": "<b style='color:#963B33;'>党派</b> <b>vs.</b> <b style='color:#7F333B;'>工会</b><br/>" +
-        "党派得分较高的人倾向于把政党作为社会主义运动的基础。工会得分较高的人倾向于把工会和其他形式的群众组织作为社会主义运动的基础。倾向党派并不一定意味着你反对工会，反之亦然，这更多的是体现一种偏好。"
+            "党派得分较高的人倾向于把政党作为社会主义运动的基础。工会得分较高的人倾向于把工会和其他形式的群众组织作为社会主义运动的基础。倾向党派并不一定意味着你反对工会，反之亦然，这更多的是体现一种偏好。"
     },
     "index-prod-desc": {
         "en": "<b style='color:#804E00;'>Production</b> <b>vs.</b> <b style='color:#76890B;'>Nature</b><br/>" +
-        "Those with a higher production score tend to prioritize industrial output and self-sustainability over ecological goals. Those with a higher nature score tend to support an environmentally oriented economy with strict ecological protections.",
+            "Those with a higher production score tend to prioritize industrial output and self-sustainability over ecological goals. Those with a higher nature score tend to support an environmentally oriented economy with strict ecological protections.",
         "de": "<b style='color:#804E00;'>Produktion</b> <b>vs.</b> <b style='color:#76890B;'>Ökologie</b><br/>" +
-        "Diejenigen mit einem höheren Produktionsfaktor tendieren dazu, die Industrieproduktion und die Selbstverträglichkeit vor ökologischen Zielen zu priorisieren. Diejenigen mit einem höheren ökologischen Faktor tendieren dazu, eine umweltorientierte Wirtschaft mit strengen ökologischen Schutzmaßnahmen zu unterstützen.",
+            "Diejenigen mit einem höheren Produktionsfaktor tendieren dazu, die Industrieproduktion und die Selbstverträglichkeit vor ökologischen Zielen zu priorisieren. Diejenigen mit einem höheren ökologischen Faktor tendieren dazu, eine umweltorientierte Wirtschaft mit strengen ökologischen Schutzmaßnahmen zu unterstützen.",
         "ko": `<b style="color:#804E00;">생산</b> <b>vs.</b> <b style="color:#76890B;">생태</b><br/> 생산주의 점수가 높을 수록 생태학적 목표보다 산업 생산량과 산업의 지속가능성을 우선시하는 경향이 있습니다. 높은 생태주의 점수를 가진 사람들은 엄격한 생태 보호를 통한 환경 지향적 경제를 지지하는 경향이 있습니다.`,
         "ru": "<b style='color:#804E00;'>Производство</b> <b>vs.</b> <b style='color:#586808;'>Природа</b><br/>" +
-        "Те, кто имеет более высокий балл Производства, склонны отдавать предпочтение промышленному производству и самообеспеченности перед экологическими целями. Те, кто имеет более высокий балл Природы, имеют тенденцию поддерживать экологически ориентированную экономику со строгой экологической защитой.",
+            "Те, кто имеет более высокий балл Производства, склонны отдавать предпочтение промышленному производству и самообеспеченности перед экологическими целями. Те, кто имеет более высокий балл Природы, имеют тенденцию поддерживать экологически ориентированную экономику со строгой экологической защитой.",
         "cn": "<b style='color:#804E00;'>生产</b> <b>vs.</b> <b style='color:#76890B;'>自然</b><br/>" +
-        "生产得分较高的人倾向于将工业产出和自给自足置于生态目标之上。自然得分较高的人倾向于支持采取严格的生态保护措施的环境导向型经济。"
+            "生产得分较高的人倾向于将工业产出和自给自足置于生态目标之上。自然得分较高的人倾向于支持采取严格的生态保护措施的环境导向型经济。"
     },
     "index-cons-desc": {
         "en": "<b style='color:#27577A;'>Conservative</b> <b>vs.</b> <b style='color:#C4A717;'>Progressive</b><br/>" +
-        "Those with a higher conservative score tend to favor more socially conservative policies and views. Those with a higher progressive score tend to support more socially progressive policies and views.",
+            "Those with a higher conservative score tend to favor more socially conservative policies and views. Those with a higher progressive score tend to support more socially progressive policies and views.",
         "de": "<b style='color:#27577A;'>Konservativ</b> <b>vs.</b> <b style='color:#C4A717;'>Progressiv</b><br/>" +
-        "Diejenigen mit einer höheren konservativen Bewertung tendieren dazu, sozial konservativere Strategien und Ansichten zu bevorzugen. Diejenigen mit einer höheren progressiven Punktzahl unterstützen tendenziell eine sozial progressivere Politik und Sichtweise.",
+            "Diejenigen mit einer höheren konservativen Bewertung tendieren dazu, sozial konservativere Strategien und Ansichten zu bevorzugen. Diejenigen mit einer höheren progressiven Punktzahl unterstützen tendenziell eine sozial progressivere Politik und Sichtweise.",
         "ko": `<b style="color:#27577A;">보수</b> <b>vs.</b> <b style="color:#C4A717;">진보</b><br/> 보수주의 점수가 높은 사람들은 사회적으로 보수적인 정책과 견해를 선호하는 경향이 있습니다. 진보주의 점수가 높은 사람들은 사회적으로 진보적인 정책과 견해를 지지하는 경향이 있습니다.`,
         "ru": "<b style='color:#27577A;'>Консерватизм</b> <b>vs.</b> <b style='color:#C4A717;'>Прогрессивизм</b><br/>" +
-        "Те, кто имеет более высокий балл Консерватизма, склонны отдавать предпочтение более социально консервативной политике и взглядам. Те, кто имеет более высокий балл Прогрессивизма, склонны поддерживать более социально прогрессивную политику и взгляды.",
+            "Те, кто имеет более высокий балл Консерватизма, склонны отдавать предпочтение более социально консервативной политике и взглядам. Те, кто имеет более высокий балл Прогрессивизма, склонны поддерживать более социально прогрессивную политику и взгляды.",
         "cn": "<b style='color:#27577A;'>保守主义</b> <b>vs.</b> <b style='color:#C4A717;'>进步主义</b><br/>" +
-        "保守主义得分较高的人倾向于支持在社会方面更保守的政策和观点。进步主义得分较高的人倾向于支持在社会方面更进步的政策和观点。"
+            "保守主义得分较高的人倾向于支持在社会方面更保守的政策和观点。进步主义得分较高的人倾向于支持在社会方面更进步的政策和观点。"
     },
     "index-h2-closest": {
         "en": "What does \"Closest Match\" mean in the results?",
@@ -414,7 +430,7 @@ const i18n = {
     }
 }
 
-langElements.forEach((element) =>  {
+langElements.forEach((element) => {
     let value = element.getAttribute("data-i18n")
     if (value in i18n && userLang in i18n[value]) {
         element.innerHTML = i18n[value][userLang]
@@ -426,18 +442,18 @@ languages.forEach(language => {
     let option = document.createElement("option");
     option.text = language.name
     option.value = language.code
-    langPicker.add(option); 
+    langPicker.add(option);
 })
 if (langPicker) {
     for (let option of langPicker.options) {
-        if(option.value == userLang) {
+        if (option.value == userLang) {
             langPicker.value = userLang
         }
     }
-        
+
     langPicker.onchange = function() {
         let language = langPicker.options[langPicker.selectedIndex].value
         setCookie("lang", language, 5)
         location.reload()
-    }   
+    }
 }
