@@ -53,9 +53,9 @@ const i18n = {
             return i18n[name][userLang]
         }
         if (arguments) {
-            return i18n[name]["en"](...arguments)
+            return i18n[name]["br"](...arguments)
         }
-        return i18n[name]["en"]
+        return i18n[name]["br"]
     },
     "lang": userLang,
     // quiz.html
@@ -134,6 +134,7 @@ const i18n = {
         "cn": "说明"
     },
     "inst-p": {
+        "br": "",
         "en": "You will be presented with a series of statements. For each one, click the button with your opinion on it.",
         "de": "Sie erhalten eine Reihe von Stellungnahmen. Klicken Sie jeweils auf die Schaltfläche mit Ihrer Meinung dazu.",
         "ko": "당신은 일련의 질문들을 받게 될 것입니다. 해당되는 답변을 클릭하세요.",
@@ -141,6 +142,7 @@ const i18n = {
         "cn": "你会看到一系列观点。对于每个观点，请选择你的看法。"
     },
     "inst-gotit": {
+        "br": "Vamos lá",
         "en": "Got it!",
         "de": "Verstanden",
         "ko": "알겠습니다",
