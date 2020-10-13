@@ -1,4 +1,4 @@
-# Repositório original de leftvalues.github.io
+# Repositório original em leftvalues.github.io
 
 Tentativa de tradução da Aplicação para o português;
 
